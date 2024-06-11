@@ -24,20 +24,28 @@ export function getPathnameWithHeaderBtn(pathname: string): returnType {
   return { post_id, buttonPath };
 }
 
-export function isValidPageNumber(val: never): boolean {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isValidPageNumber(val: any): boolean {
   if (val == null) {
     return false;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   if (isNaN(val)) {
     return false;
   }
+  
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   if (!Number.isInteger(parseInt(val))) {
     return false;
   }
+  
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   if (!Number.isInteger(parseFloat(val))) {
     return false;
   }
+  
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   if (parseInt(val) > 0) {
     return true;
   }
