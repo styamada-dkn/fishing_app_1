@@ -39,12 +39,14 @@ const CardContainer: FC<CardContainerProps> = ({ post }) => {
       <Link prefetch={false} href={`${ContentsPath.DETAIL}/${post?.id}`}>
         <div className="pb-2">
           {/*投稿写真*/}
-          <div className="w-full h-auto relative">
+          {/* <div className="w-full h-auto relative"> */}
+          <div className="h-[244px] relative">
             <Image
               src={photo1_path}
               alt="image"
-              width={264}
-              height={264}
+              fill
+              // width={264}
+              // height={264}
               className="object-cover"
             />
             <p className="absolute top-0 left-0 text-sm z-10 text-info border border-info">
