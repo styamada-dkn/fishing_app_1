@@ -1,9 +1,16 @@
 import { photoContentsType } from "@/app/components/form/ArticleForm";
-import PhotoImage from "@/app/components/photo/PhotoImage";
 import { PhotoType } from "@/constants/types";
-import { Dispatch, FC, SetStateAction, useEffect, useRef } from "react";
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import { FaCamera } from "react-icons/fa6";
-import classNames from "classnames" 
+import classNames from "classnames";
+import Image from "next/image";
 
 interface PhotoContainerProps {
   photoData?: PhotoType[];
@@ -22,9 +29,9 @@ const PhotoContainer: FC<PhotoContainerProps> = ({
 
   useEffect(() => {
     const initialState = {
-      photo1: { image_url: "" },
-      photo2: { image_url: "" },
-      photo3: { image_url: "" },
+      photo1: { image_url: "/no_image.jpg" },
+      photo2: { image_url: "/no_image.jpg" },
+      photo3: { image_url: "/no_image.jpg" },
     };
 
     const photoList = !photoData
@@ -120,17 +127,40 @@ const PhotoContainer: FC<PhotoContainerProps> = ({
     "mt-2",
     "bg-transparent"
   );
-  return (
-    <div className="min-h-72 bg-third rounded-lg">
-      <div className="bg-form text-neutral rounded-t-lg flex justify-center items-center">
-        <FaCamera className="size-5" />
-        <h3 className="font-bold pl-2 leading-7">釣行写真</h3>
-      </div>
-      <div className="flex flex-col px-2 pb-2 items-center md:flex-row md:flex-wrap md:justify-evenly h-full">
-        <div className={photoFrameStyle}>
-          <PhotoImage imageUrl={onGetImgUrl.photo1 ?? ""} />
 
-          <div className="text-center flex items-center justify-between">
+  const isEmpty = useCallback((obj: unknown) => {
+    if (obj == null) return true;
+
+    if (typeof obj === "string") {
+      return obj ? false : true;
+    }
+    if (typeof obj === "object") {
+      return Object.keys(obj).length === 0;
+    }
+    return true;
+  }, []);
+
+  return (
+    <div className="min-h-72 rounded-lg bg-third">
+      <div className="flex items-center justify-center rounded-t-lg bg-form text-neutral">
+        <FaCamera className="size-5" />
+        <h3 className="pl-2 font-bold leading-7">釣行写真</h3>
+      </div>
+      <div className="flex h-full flex-col items-center px-2 pb-2 md:flex-row md:flex-wrap md:justify-evenly">
+        <div className={photoFrameStyle}>
+          <div className="relative h-[212px]">
+            <Image
+              src={
+                isEmpty(onGetImgUrl.photo1)
+                  ? "/no_image.jpg"
+                  : onGetImgUrl.photo1 ?? "/no_image.jpg"
+              }
+              alt="image"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="flex items-center justify-between text-center">
             {/* 写真１ */}
             <label className={photoButtonStyle}>
               画像を選択
@@ -157,9 +187,19 @@ const PhotoContainer: FC<PhotoContainerProps> = ({
           </div>
         </div>
         <div className={photoFrameStyle}>
-          <PhotoImage imageUrl={onGetImgUrl.photo2 ?? ""} />
-
-          <div className="text-center flex items-center justify-between">
+          <div className="relative h-[212px]">
+            <Image
+              src={
+                isEmpty(onGetImgUrl.photo2)
+                  ? "/no_image.jpg"
+                  : onGetImgUrl.photo2 ?? "/no_image.jpg"
+              }
+              alt="image"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="flex items-center justify-between text-center">
             {/* 写真２ */}
             <label className={photoButtonStyle}>
               画像を選択
@@ -186,9 +226,19 @@ const PhotoContainer: FC<PhotoContainerProps> = ({
           </div>
         </div>
         <div className={photoFrameStyle}>
-          <PhotoImage imageUrl={onGetImgUrl.photo3 ?? ""} />
-
-          <div className="text-center flex items-center justify-between">
+          <div className="relative h-[212px]">
+            <Image
+              src={
+                isEmpty(onGetImgUrl.photo3)
+                  ? "/no_image.jpg"
+                  : onGetImgUrl.photo3 ?? "/no_image.jpg"
+              }
+              alt="image"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="flex items-center justify-between text-center">
             {/* 写真３ */}
             <label className={photoButtonStyle}>
               画像を選択
